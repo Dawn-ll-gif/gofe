@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 华夏大学</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+					<li><a href="dashboard.html" nclick="showSection('dashboard')">
+                        <span class="icon">📊</span> 仪表盘
+                    </a></li>
+                    <li><a href="users.html"  onClick="showsection('users')">
+                        <span class="icon">👥</span> 用户管理
+                    </a></li>
+                    <li><a href= "news.html" onclick="showSection('news')">
+                        <span class="icon">📰</span> 新闻管理
+                    </a></li>
+                    <li><a href="students.html" onclick="showSection('students')">
+                        <span class="icon">🎓</span> 学生管理
+                    </a></li>
+                    <li><a href="teachers.html" onclick="showSection('teachers')">
+                        <span class="icon">👨‍🏫</span> 教师管理
+                    </a></li>
+                    <li><a href="courses.html" onclick="showSection('courses')">
+                        <span class="icon">📚</span> 课程管理
+                    </a></li>
+                    <li><a href="uploads.html" onclick="showSection('uploads')">
+                        <span class="icon">📤</span> 上传管理
+                    </a></li>
+                    <li><a href="settings.html" onclick="showSection('settings')">
+                        <span class="icon">⚙️</span> 系统设置
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">退出登录</a>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="admin-main">
+            <!-- 顶部栏 -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                    <h1>华夏大学后台管理系统</h1>
+                </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <button class="btn btn-sm btn-info" onclick="systemHealthCheck()">🔍 系统检查</button>
+                    <button class="btn btn-sm btn-secondary" onclick="viewOperationLogs()">📋 操作日志</button>
+                </div>
+                <div class="user-info">
+                    <span>欢迎，管理员</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0066cc&color=fff" alt="头像">
+                </div>
+            </div>
+            </header>
+
+            <!-- yonghuguanli -->
+            <section class="admin-section active" id="dashboard">
+                 <!-- 用户管理 -->
+            <section class="admin-section active" id="users">
+                <div class="section-header">
+                    <h2 class="text-2xl font-bold text-gray-800">用户管理</h2>
+                    <div class="section-actions">
+                        <input type="text" class="search-input" id="userSearch" placeholder="搜索用户..." oninput="searchData('users')">
+                        <select class="filter-select" id="userFilter" onchange="filterData('users')">
+                            <option value="">全部角色</option>
+                            <option value="student">学生</option>
+                            <option value="teacher">教师</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                        <select class="filter-select" id="userStatusFilter" onchange="filterData('users')">
+                            <option value="">全部状态</option>
+                            <option value="1">正常</option>
+                            <option value="0">禁用</option>
+                        </select>
+                        <button class="btn btn-secondary bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center" onclick="importData('users')">
+                            <i class="fas fa-file-import mr-2"></i> 导入
+                        </button>
+                        <button class="btn btn-secondary bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center" onclick="exportData('users')">
+                            <i class="fas fa-file-export mr-2"></i> 导出
+                        </button>
+                        <button class="btn btn-danger bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center" onclick="batchDelete('users')">
+                            <i class="fas fa-trash-alt mr-2"></i> 批量删除
+                        </button>
+                        <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded flex items-center" onclick="openModal('addUser')">
+                            <i class="fas fa-plus mr-2"></i> 添加用户
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container bg-white rounded-lg shadow overflow-hidden">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-3 px-6 text-left">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                </th>
+                                <th class="py-3 px-6 text-left">ID</th>
+                                <th class="py-3 px-6 text-left">用户名</th>
+                                <th class="py-3 px-6 text-left">姓名</th>
+                                <th class="py-3 px-6 text-left">角色</th>
+                                <th class="py-3 px-6 text-left">邮箱</th>
+                                <th class="py-3 px-6 text-left">状态</th>
+                                <th class="py-3 px-6 text-left">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- 用户数据将通过JavaScript动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+</div>
+              <div class="dashboard-grid"> </div>
+            </section>

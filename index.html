@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华夏大学</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>华夏大学</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">学校概况</a></li>
+                <li><a href="#news">新闻动态</a></li>
+                <li><a href="#academics">学术科研</a></li>
+                <li><a href="#campus">校园生活</a></li>
+                <li><a href="#admissions">招生信息</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="login-btn">
+                <a href="login.html">登录</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <span></span>
+        </div>
+        <div class="sidebar-content">
+            <h3>快速导航</h3>
+            <ul>
+                <li><a href="#students">学生服务</a></li>
+                <li><a href="#teachers">教师入口</a></li>
+                <li><a href="#library">图书馆</a></li>
+                <li><a href="#campusmap">校园地图</a></li>
+                <li><a href="#calendar">校历查询</a></li>
+                <li><a href="#jobs">人才招聘</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>联系电话：010-12345678</p>
+                <p>地址：北京市海淀区XX路123号</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 轮播图 -->
+    <section class="carousel" id="home">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1600" alt="校园风光1">
+                <div class="carousel-caption">
+                    <h2>欢迎来到华夏大学</h2>
+                    <p>追求卓越，创造未来</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600" alt="校园风光2">
+                <div class="carousel-caption">
+                    <h2>一流的教学设施</h2>
+                    <p>配备现代化实验室和图书馆</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600" alt="校园风光3">
+                <div class="carousel-caption">
+                    <h2>丰富多彩的校园生活</h2>
+                    <p>学术与兴趣并重，全面发展</p>
+                </div>
+            </div>
+            <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#10094;</button>
+            <button class="carousel-btn next" onclick="moveCarousel(1)">&#10095;</button>
+            <div class="carousel-dots">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学校概况 -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">学校概况</h2>
+            <div class="about-grid">
+                <div class="about-card slide-effect">
+                    <h3>百年名校</h3>
+                    <p>华夏大学创建于1920年，是一所历史悠久、声誉卓著的综合性大学。一个世纪以来，学校始终秉承"厚德博学、求是创新"的校训精神。</p>
+                </div>
+                <div class="about-card slide-effect">
+                    <h3>师资力量</h3>
+                    <p>现有教职工5000余人，其中教授800余人，副教授1200余人。包括两院院士、长江学者、国家杰出青年基金获得者等高层次人才。</p>
+                </div>
+                <div class="about-card slide-effect">
+                    <h3>学科建设</h3>
+                    <p>设有20个学院，涵盖文、理、工、医、经、管、法、教育等学科门类。其中12个学科进入ESI全球前1%。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻动态 -->
+    <section class="section bg-light" id="news">
+        <div class="container">
+            <h2 class="section-title">新闻动态</h2>
+            <div class="news-grid">
+                <div class="news-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400" alt="新闻图片">
+                    <div class="news-content">
+                        <span class="news-date">2024-12-20</span>
+                        <h3>华夏大学入选"双一流"建设高校名单</h3>
+                        <p>近日，教育部公布新一轮"双一流"建设高校名单，华夏大学多个学科成功入选...</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+                <div class="news-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400" alt="新闻图片">
+                    <div class="news-content">
+                        <span class="news-date">2024-12-18</span>
+                        <h3>我校举办国际学术研讨会</h3>
+                        <p>来自20多个国家和地区的专家学者齐聚华夏大学，共同探讨前沿科技发展...</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+                <div class="news-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400" alt="新闻图片">
+                    <div class="news-content">
+                        <span class="news-date">2024-12-15</span>
+                        <h3>2025年研究生招生简章发布</h3>
+                        <p>华夏大学2025年硕士研究生招生专业目录及报考指南现已公布，欢迎报考...</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学术科研 -->
+    <section class="section" id="academics">
+        <div class="container">
+            <h2 class="section-title">学术科研</h2>
+            <div class="stats-grid">
+                <div class="stat-card slide-effect">
+                    <h3 class="stat-number">120+</h3>
+                    <p>国家级科研项目</p>
+                </div>
+                <div class="stat-card slide-effect">
+                    <h3 class="stat-number">5000+</h3>
+                    <p>学术论文发表</p>
+                </div>
+                <div class="stat-card slide-effect">
+                    <h3 class="stat-number">80+</h3>
+                    <p>专利授权</p>
+                </div>
+                <div class="stat-card slide-effect">
+                    <h3 class="stat-number">50+</h3>
+                    <p>科研平台</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 校园生活 -->
+    <section class="section bg-light" id="campus">
+        <div class="container">
+            <h2 class="section-title">校园生活</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=400" alt="校园生活">
+                </div>
+                <div class="gallery-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400" alt="校园生活">
+                </div>
+                <div class="gallery-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400" alt="校园生活">
+                </div>
+                <div class="gallery-item slide-effect">
+                    <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=400" alt="校园生活">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 招生信息 -->
+    <section class="section" id="admissions">
+        <div class="container">
+            <h2 class="section-title">招生信息</h2>
+            <div class="admissions-grid">
+                <div class="admissions-card slide-effect">
+                    <h3>本科招生</h3>
+                    <p>每年招收本科生约6000人，覆盖全国31个省市自治区。</p>
+                    <a href="#" class="btn">查看详情</a>
+                </div>
+                <div class="admissions-card slide-effect">
+                    <h3>研究生招生</h3>
+                    <p>每年招收硕士研究生约3000人，博士研究生约500人。</p>
+                    <a href="#" class="btn">查看详情</a>
+                </div>
+                <div class="admissions-card slide-effect">
+                    <h3>留学生招生</h3>
+                    <p>面向全球招收各类留学生，提供奖学金支持。</p>
+                    <a href="#" class="btn">查看详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="section bg-light" id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-grid">
+                <div class="contact-info slide-effect">
+                    <h3>联系方式</h3>
+                    <p><strong>地址：</strong>北京市海淀区XX路123号</p>
+                    <p><strong>电话：</strong>010-12345678</p>
+                    <p><strong>邮箱：</strong>info@huaxia.edu.cn</p>
+                    <p><strong>邮编：</strong>100000</p>
+                </div>
+                <div class="contact-form slide-effect">
+                    <form id="contactForm">
+                        <input type="text" placeholder="您的姓名" required>
+                        <input type="email" placeholder="您的邮箱" required>
+                        <input type="text" placeholder="主题" required>
+                        <textarea placeholder="您的留言" rows="5" required></textarea>
+                        <button type="submit" class="btn">发送消息</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>华夏大学</h3>
+                    <p>厚德博学 求是创新</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#about">学校概况</a></li>
+                        <li><a href="#news">新闻动态</a></li>
+                        <li><a href="#academics">学术科研</a></li>
+                        <li><a href="#admissions">招生信息</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">微博</a></li>
+                        <li><a href="#">抖音</a></li>
+                        <li><a href="#">B站</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 华夏大学 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

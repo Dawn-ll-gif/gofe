@@ -1,0 +1,382 @@
+   <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 华夏大学</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+					<li><a href="dashboard.html" nclick="showSection('dashboard')">
+                        <span class="icon">📊</span> 仪表盘
+                    </a></li>
+                    <li><a href="users.html"  onClick="showsection('users')">
+                        <span class="icon">👥</span> 用户管理
+                    </a></li>
+                    <li><a href= "news.html" onclick="showSection('news')">
+                        <span class="icon">📰</span> 新闻管理
+                    </a></li>
+                    <li><a href="students.html" onclick="showSection('students')">
+                        <span class="icon">🎓</span> 学生管理
+                    </a></li>
+                    <li><a href="teachers.html" onclick="showSection('teachers')">
+                        <span class="icon">👨‍🏫</span> 教师管理
+                    </a></li>
+                    <li><a href="courses.html" onclick="showSection('courses')">
+                        <span class="icon">📚</span> 课程管理
+                    </a></li>
+                    <li><a href="uploads.html" onclick="showSection('uploads')">
+                        <span class="icon">📤</span> 上传管理
+                    </a></li>
+                    <li><a href="settings.html" onclick="showSection('settings')">
+                        <span class="icon">⚙️</span> 系统设置
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">退出登录</a>
+            </div>
+        </aside> 
+		<!-- 主内容区 -->
+    <main class="admin-main">
+        <!-- 头部 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>教师管理</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span>管理员</span>
+                    <img src="https://picsum.photos/40/40?person" alt="用户头像">
+                </div>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <section class="admin-section active" id="teachers">
+            <div class="section-header">
+                <h2>教师列表</h2>
+                <div class="section-actions">
+                    <input type="text" class="search-input" placeholder="搜索教师..." oninput="searchTeachers()">
+                    <select class="filter-select" onchange="filterTeachers()">
+                        <option value="">所有院系</option>
+                        <option value="计算机学院">计算机学院</option>
+                        <option value="软件学院">软件学院</option>
+                        <option value="数据科学学院">数据科学学院</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openAddTeacherModal()">添加教师</button>
+                </div>
+            </div>
+
+            <!-- 教师表格 -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>工号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>职称</th>
+                            <th>所属院系</th>
+                            <th>联系方式</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacherTableBody">
+                        <!-- 教师数据将通过JavaScript动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <div class="pagination-info">显示 1-10 条，共 50 条</div>
+                <div class="pagination-buttons">
+                    <button class="btn btn-secondary">上一页</button>
+                    <button class="btn active">1</button>
+                    <button class="btn">2</button>
+                    <button class="btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="btn">5</button>
+                    <button class="btn btn-secondary">下一页</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 添加教师模态框 -->
+<div class="modal" id="addTeacherModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>添加教师</h3>
+            <button class="close-btn" onclick="closeAddTeacherModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form class="modal-form" id="teacherForm">
+                <div class="form-group">
+                    <label>工号 <span class="required">*</span></label>
+                    <input type="text" id="teacherId" required>
+                </div>
+                <div class="form-group">
+                    <label>姓名 <span class="required">*</span></label>
+                    <input type="text" id="teacherName" required>
+                </div>
+                <div class="form-group">
+                    <label>性别</label>
+                    <select id="teacherGender">
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>职称</label>
+                    <select id="teacherTitle">
+                        <option value="助教">助教</option>
+                        <option value="讲师">讲师</option>
+                        <option value="副教授">副教授</option>
+                        <option value="教授">教授</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>所属院系</label>
+                    <select id="teacherDepartment">
+                        <option value="计算机学院">计算机学院</option>
+                        <option value="软件学院">软件学院</option>
+                        <option value="数据科学学院">数据科学学院</option>
+                        <option value="人工智能学院">人工智能学院</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>联系方式</label>
+                    <input type="tel" id="teacherPhone">
+                </div>
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input type="email" id="teacherEmail">
+                </div>
+                <div class="form-group">
+                    <label>状态</label>
+                    <select id="teacherStatus">
+                        <option value="在职">在职</option>
+                        <option value="休假">休假</option>
+                        <option value="离职">离职</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTeacherModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 教师数据
+    let teacherData = [
+        {id: "T2023001", name: "张教授", gender: "男", title: "教授", department: "计算机学院", phone: "13800138001", email: "zhang@huaxia.edu.cn", status: "在职"},
+        {id: "T2023002", name: "李讲师", gender: "女", title: "讲师", department: "软件学院", phone: "13800138002", email: "li@huaxia.edu.cn", status: "在职"},
+        {id: "T2023003", name: "王副教授", gender: "男", title: "副教授", department: "数据科学学院", phone: "13800138003", email: "wang@huaxia.edu.cn", status: "休假"}
+    ];
+
+    // 渲染教师列表
+    function renderTeacherList(teachers = teacherData) {
+        const tbody = document.getElementById('teacherTableBody');
+        tbody.innerHTML = '';
+        teachers.forEach(teacher => {
+            const row = `
+                <tr>
+                    <td>${teacher.id}</td>
+                    <td>${teacher.name}</td>
+                    <td>${teacher.gender}</td>
+                    <td>${teacher.title}</td>
+                    <td>${teacher.department}</td>
+                    <td>${teacher.phone}</td>
+                    <td><span class="status ${teacher.status === '在职' ? 'active' : teacher.status === '休假' ? 'pending' : 'inactive'}">${teacher.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-view" onclick="viewTeacher('${teacher.id}')">查看</button>
+                        <button class="btn btn-sm btn-edit" onclick="editTeacher('${teacher.id}')">编辑</button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteTeacher('${teacher.id}')">删除</button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // 搜索教师
+    function searchTeachers() {
+        const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+        const filtered = teacherData.filter(teacher => 
+            teacher.name.toLowerCase().includes(searchTerm) || 
+            teacher.id.toLowerCase().includes(searchTerm) ||
+            teacher.department.toLowerCase().includes(searchTerm)
+        );
+        renderTeacherList(filtered);
+    }
+
+    // 筛选教师
+    function filterTeachers() {
+        const departmentFilter = document.querySelector('.filter-select').value;
+        if (!departmentFilter) {
+            renderTeacherList();
+            return;
+        }
+        const filtered = teacherData.filter(teacher => teacher.department === departmentFilter);
+        renderTeacherList(filtered);
+    }
+
+    // 打开添加教师模态框
+    function openAddTeacherModal() {
+        document.getElementById('addTeacherModal').classList.add('active');
+    }
+
+    // 关闭添加教师模态框
+    function closeAddTeacherModal() {
+        document.getElementById('addTeacherModal').classList.remove('active');
+        document.getElementById('teacherForm').reset();
+    }
+
+    // 提交教师表单
+    document.getElementById('teacherForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('teacherId').value;
+        const name = document.getElementById('teacherName').value;
+        const gender = document.getElementById('teacherGender').value;
+        const title = document.getElementById('teacherTitle').value;
+        const department = document.getElementById('teacherDepartment').value;
+        const phone = document.getElementById('teacherPhone').value;
+        const email = document.getElementById('teacherEmail').value;
+        const status = document.getElementById('teacherStatus').value;
+        
+        const newTeacher = {
+            id,
+            name,
+            gender,
+            title,
+            department,
+            phone,
+            email,
+            status
+        };
+        
+        teacherData.push(newTeacher);
+        renderTeacherList();
+        closeAddTeacherModal();
+        showMessage('教师添加成功！', 'success');
+    });
+
+    // 查看教师详情
+    function viewTeacher(id) {
+        const teacher = teacherData.find(t => t.id === id);
+        if (teacher) {
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>教师详情</h3>
+                        <button class="close-btn" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="detail-view">
+                            <div class="detail-items">
+                                <div class="detail-item">
+                                    <span class="detail-label">工号：</span>
+                                    <span class="detail-value">${teacher.id}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">姓名：</span>
+                                    <span class="detail-value">${teacher.name}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">性别：</span>
+                                    <span class="detail-value">${teacher.gender}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">职称：</span>
+                                    <span class="detail-value">${teacher.title}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">所属院系：</span>
+                                    <span class="detail-value">${teacher.department}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">联系方式：</span>
+                                    <span class="detail-value">${teacher.phone}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">邮箱：</span>
+                                    <span class="detail-value">${teacher.email}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">状态：</span>
+                                    <span class="detail-value"><span class="status ${teacher.status === '在职' ? 'active' : teacher.status === '休假' ? 'pending' : 'inactive'}">${teacher.status}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    }
+
+    // 编辑教师
+    function editTeacher(id) {
+        const teacher = teacherData.find(t => t.id === id);
+        if (teacher) {
+            document.getElementById('teacherId').value = teacher.id;
+            document.getElementById('teacherName').value = teacher.name;
+            document.getElementById('teacherGender').value = teacher.gender;
+            document.getElementById('teacherTitle').value = teacher.title;
+            document.getElementById('teacherDepartment').value = teacher.department;
+            document.getElementById('teacherPhone').value = teacher.phone;
+            document.getElementById('teacherEmail').value = teacher.email;
+            document.getElementById('teacherStatus').value = teacher.status;
+            openAddTeacherModal();
+        }
+    }
+
+    // 删除教师
+    function deleteTeacher(id) {
+        if (confirm('确定要删除该教师吗？')) {
+            teacherData = teacherData.filter(t => t.id !== id);
+            renderTeacherList();
+            showMessage('教师删除成功！', 'success');
+        }
+    }
+
+    // 显示消息提示
+    function showMessage(text, type) {
+        const message = document.createElement('div');
+        message.className = `message message-${type}`;
+        message.innerHTML = `
+            <div class="message-icon">${type === 'success' ? '✓' : '!'}</div>
+            <div class="message-text">${text}</div>
+            <button class="message-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        document.body.appendChild(message);
+        setTimeout(() => message.remove(), 3000);
+    }
+
+    // 切换侧边栏（移动端）
+    function toggleSidebar() {
+        document.querySelector('.admin-sidebar').classList.toggle('active');
+    }
+
+    // 页面加载时渲染教师列表
+    document.addEventListener('DOMContentLoaded', renderTeacherList);
+</script>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 华夏大学</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+					<li><a href="dashboard.html" nclick="showSection('dashboard')">
+                        <span class="icon">📊</span> 仪表盘
+                    </a></li>
+                    <li><a href="users.html"  onClick="showsection('users')">
+                        <span class="icon">👥</span> 用户管理
+                    </a></li>
+                    <li><a href= "news.html" onclick="showSection('news')">
+                        <span class="icon">📰</span> 新闻管理
+                    </a></li>
+                    <li><a href="students.html" onclick="showSection('students')">
+                        <span class="icon">🎓</span> 学生管理
+                    </a></li>
+                    <li><a href="teachers.html" onclick="showSection('teachers')">
+                        <span class="icon">👨‍🏫</span> 教师管理
+                    </a></li>
+                    <li><a href="courses.html" onclick="showSection('courses')">
+                        <span class="icon">📚</span> 课程管理
+                    </a></li>
+                    <li><a href="uploads.html" onclick="showSection('uploads')">
+                        <span class="icon">📤</span> 上传管理
+                    </a></li>
+                    <li><a href="settings.html" onclick="showSection('settings')">
+                        <span class="icon">⚙️</span> 系统设置
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">退出登录</a>
+            </div>
+        </aside>
+
+            <!-- 主内容区 -->
+    <main class="admin-main">
+        <!-- 头部 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>课程管理</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span>管理员</span>
+                    <img src="https://picsum.photos/40/40?person" alt="用户头像">
+                </div>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <section class="admin-section active" id="courses">
+            <div class="section-header">
+                <h2>课程列表</h2>
+                <div class="section-actions">
+                    <input type="text" class="search-input" placeholder="搜索课程..." oninput="searchCourses()">
+                    <select class="filter-select" onchange="filterCourses()">
+                        <option value="">所有院系</option>
+                        <option value="计算机学院">计算机学院</option>
+                        <option value="软件学院">软件学院</option>
+                        <option value="数据科学学院">数据科学学院</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openAddCourseModal()">添加课程</button>
+                </div>
+            </div>
+
+            <!-- 课程表格 -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>课程代码</th>
+                            <th>课程名称</th>
+                            <th>授课教师</th>
+                            <th>学分</th>
+                            <th>所属院系</th>
+                            <th>开课时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTableBody">
+                        <!-- 课程数据将通过JavaScript动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <div class="pagination-info">显示 1-10 条，共 50 条</div>
+                <div class="pagination-buttons">
+                    <button class="btn btn-secondary">上一页</button>
+                    <button class="btn active">1</button>
+                    <button class="btn">2</button>
+                    <button class="btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="btn">5</button>
+                    <button class="btn btn-secondary">下一页</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 添加课程模态框 -->
+<div class="modal" id="addCourseModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>添加课程</h3>
+            <button class="close-btn" onclick="closeAddCourseModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form class="modal-form" id="courseForm">
+                <div class="form-group">
+                    <label>课程代码 <span class="required">*</span></label>
+                    <input type="text" id="courseCode" required>
+                </div>
+                <div class="form-group">
+                    <label>课程名称 <span class="required">*</span></label>
+                    <input type="text" id="courseName" required>
+                </div>
+                <div class="form-group">
+                    <label>授课教师</label>
+                    <input type="text" id="courseTeacher">
+                </div>
+                <div class="form-group">
+                    <label>学分</label>
+                    <input type="number" id="courseCredits" min="1" max="10">
+                </div>
+                <div class="form-group">
+                    <label>所属院系</label>
+                    <select id="courseDepartment">
+                        <option value="计算机学院">计算机学院</option>
+
+                        <option value="软件学院">软件学院</option>
+                        <option value="数据科学学院">数据科学学院</option>
+                        <option value="人工智能学院">人工智能学院</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>开课时间</label>
+                    <input type="text" id="courseSchedule" placeholder="例如：周一 9:00-11:00">
+                </div>
+                <div class="form-group">
+                    <label>状态</label>
+                    <select id="courseStatus">
+                        <option value="进行中">进行中</option>
+                        <option value="已结束">已结束</option>
+                        <option value="未开始">未开始</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCourseModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 课程数据
+    let courseData = [
+        {code: "CS101", name: "计算机科学导论", teacher: "张教授", credits: 3, department: "计算机学院", schedule: "周一 9:00-11:00", status: "进行中"},
+        {code: "SE201", name: "软件工程", teacher: "李讲师", credits: 4, department: "软件学院", schedule: "周二 14:00-16:00", status: "进行中"},
+        {code: "DS301", name: "数据结构", teacher: "王副教授", credits: 3, department: "数据科学学院", schedule: "周三 10:00-12:00", status: "已结束"}
+    ];
+
+    // 渲染课程列表
+    function renderCourseList(courses = courseData) {
+        const tbody = document.getElementById('courseTableBody');
+        tbody.innerHTML = '';
+        courses.forEach(course => {
+            const row = `
+                <tr>
+                    <td>${course.code}</td>
+                    <td>${course.name}</td>
+                    <td>${course.teacher}</td>
+                    <td>${course.credits}</td>
+                    <td>${course.department}</td>
+                    <td>${course.schedule}</td>
+                    <td><span class="status ${course.status === '进行中' ? 'active' : course.status === '未开始' ? 'pending' : 'inactive'}">${course.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-view" onclick="viewCourse('${course.code}')">查看</button>
+                        <button class="btn btn-sm btn-edit" onclick="editCourse('${course.code}')">编辑</button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteCourse('${course.code}')">删除</button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // 搜索课程
+    function searchCourses() {
+        const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+        const filtered = courseData.filter(course => 
+            course.name.toLowerCase().includes(searchTerm) || 
+            course.code.toLowerCase().includes(searchTerm) ||
+            course.teacher.toLowerCase().includes(searchTerm)
+        );
+        renderCourseList(filtered);
+    }
+
+    // 筛选课程
+    function filterCourses() {
+        const departmentFilter = document.querySelector('.filter-select').value;
+        if (!departmentFilter) {
+            renderCourseList();
+            return;
+        }
+        const filtered = courseData.filter(course => course.department === departmentFilter);
+        renderCourseList(filtered);
+    }
+
+    // 打开添加课程模态框
+    function openAddCourseModal() {
+        document.getElementById('addCourseModal').classList.add('active');
+    }
+
+    // 关闭添加课程模态框
+    function closeAddCourseModal() {
+        document.getElementById('addCourseModal').classList.remove('active');
+        document.getElementById('courseForm').reset();
+    }
+
+    // 提交课程表单
+    document.getElementById('courseForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const code = document.getElementById('courseCode').value;
+        const name = document.getElementById('courseName').value;
+        const teacher = document.getElementById('courseTeacher').value;
+        const credits = document.getElementById('courseCredits').value;
+        const department = document.getElementById('courseDepartment').value;
+        const schedule = document.getElementById('courseSchedule').value;
+        const status = document.getElementById('courseStatus').value;
+        
+        const newCourse = {
+            code,
+            name,
+            teacher,
+            credits,
+            department,
+            schedule,
+            status
+        };
+        
+        courseData.push(newCourse);
+        renderCourseList();
+        closeAddCourseModal();
+        showMessage('课程添加成功！', 'success');
+    });
+
+    // 查看课程详情
+    function viewCourse(code) {
+        const course = courseData.find(c => c.code === code);
+        if (course) {
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>课程详情</h3>
+                        <button class="close-btn" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="detail-view">
+                            <div class="detail-items">
+                                <div class="detail-item">
+                                    <span class="detail-label">课程代码：</span>
+                                    <span class="detail-value">${course.code}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">课程名称：</span>
+                                    <span class="detail-value">${course.name}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">授课教师：</span>
+                                    <span class="detail-value">${course.teacher}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">学分：</span>
+                                    <span class="detail-value">${course.credits}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">所属院系：</span>
+                                    <span class="detail-value">${course.department}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">开课时间：</span>
+                                    <span class="detail-value">${course.schedule}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">状态：</span>
+                                    <span class="detail-value"><span class="status ${course.status === '进行中' ? 'active' : course.status === '未开始' ? 'pending' : 'inactive'}">${course.status}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    }
+
+    // 编辑课程
+    function editCourse(code) {
+        const course = courseData.find(c => c.code === code);
+        if (course) {
+            document.getElementById('courseCode').value = course.code;
+            document.getElementById('courseName').value = course.name;
+            document.getElementById('courseTeacher').value = course.teacher;
+            document.getElementById('courseCredits').value = course.credits;
+            document.getElementById('courseDepartment').value = course.department;
+            document.getElementById('courseSchedule').value = course.schedule;
+            document.getElementById('courseStatus').value = course.status;
+            openAddCourseModal();
+        }
+    }
+
+    // 删除课程
+    function deleteCourse(code) {
+        if (confirm('确定要删除该课程吗？')) {
+            courseData = courseData.filter(c => c.code !== code);
+            renderCourseList();
+            showMessage('课程删除成功！', 'success');
+        }
+    }
+
+    // 显示消息提示
+    function showMessage(text, type) {
+        const message = document.createElement('div');
+        message.className = `message message-${type}`;
+        message.innerHTML = `
+            <div class="message-icon">${type === 'success' ? '✓' : '!'}</div>
+            <div class="message-text">${text}</div>
+            <button class="message-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        document.body.appendChild(message);
+        setTimeout(() => message.remove(), 3000);
+    }
+
+    // 切换侧边栏（移动端）
+    function toggleSidebar() {
+        document.querySelector('.admin-sidebar').classList.toggle('active');
+    }
+
+    // 页面加载时渲染课程列表
+    document.addEventListener('DOMContentLoaded', renderCourseList);
+</script>

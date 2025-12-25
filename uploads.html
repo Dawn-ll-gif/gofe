@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 华夏大学</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+					<li><a href="dashboard.html" nclick="showSection('dashboard')">
+                        <span class="icon">📊</span> 仪表盘
+                    </a></li>
+                    <li><a href="users.html"  onClick="showsection('users')">
+                        <span class="icon">👥</span> 用户管理
+                    </a></li>
+                    <li><a href= "news.html" onclick="showSection('news')">
+                        <span class="icon">📰</span> 新闻管理
+                    </a></li>
+                    <li><a href="students.html" onclick="showSection('students')">
+                        <span class="icon">🎓</span> 学生管理
+                    </a></li>
+                    <li><a href="teachers.html" onclick="showSection('teachers')">
+                        <span class="icon">👨‍🏫</span> 教师管理
+                    </a></li>
+                    <li><a href="courses.html" onclick="showSection('courses')">
+                        <span class="icon">📚</span> 课程管理
+                    </a></li>
+                    <li><a href="uploads.html" onclick="showSection('uploads')">
+                        <span class="icon">📤</span> 上传管理
+                    </a></li>
+                    <li><a href="settings.html" onclick="showSection('settings')">
+                        <span class="icon">⚙️</span> 系统设置
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">退出登录</a>
+            </div>
+        </aside>
+           <!-- 主内容区 -->
+    <main class="admin-main">
+        <!-- 头部 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>上传管理</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span>管理员</span>
+                    <img src="https://picsum.photos/40/40?person" alt="用户头像">
+                </div>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <section class="admin-section active" id="uploads">
+            <div class="section-header">
+                <h2>文件列表</h2>
+                <div class="section-actions">
+                    <input type="text" class="search-input" placeholder="搜索文件..." oninput="searchFiles()">
+                    <select class="filter-select" onchange="filterFiles()">
+                        <option value="">所有类型</option>
+                        <option value="图片">图片</option>
+                        <option value="文档">文档</option>
+                        <option value="视频">视频</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="openUploadModal()">上传文件</button>
+                </div>
+            </div>
+
+            <!-- 文件表格 -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>文件名</th>
+                            <th>类型</th>
+                            <th>大小</th>
+                            <th>上传时间</th>
+                            <th>上传者</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fileTableBody">
+                        <!-- 文件数据将通过JavaScript动态加载 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <div class="pagination-info">显示 1-10 条，共 50 条</div>
+                <div class="pagination-buttons">
+                    <button class="btn btn-secondary">上一页</button>
+                    <button class="btn active">1</button>
+                    <button class="btn">2</button>
+                    <button class="btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="btn">5</button>
+                    <button class="btn btn-secondary">下一页</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 上传文件模态框 -->
+<div class="modal" id="uploadModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>上传文件</h3>
+            <button class="close-btn" onclick="closeUploadModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form class="modal-form" id="uploadForm">
+                <div class="form-group">
+                    <label>选择文件 <span class="required">*</span></label>
+                    <input type="file" id="fileInput" required>
+                </div>
+                <div class="form-group">
+                    <label>文件类型</label>
+                    <select id="fileType">
+                        <option value="图片">图片</option>
+                        <option value="文档">文档</option>
+                        <option value="视频">视频</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>文件描述</label>
+                    <textarea id="fileDescription" rows="3" placeholder="请输入文件描述..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>访问权限</label>
+                    <select id="fileAccess">
+                        <option value="公开">公开</option>
+                        <option value="私有">私有</option>
+                        <option value="仅管理员">仅管理员</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeUploadModal()">取消</button>
+                    <button type="submit" class="btn btn-primary">上传</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 文件数据
+    let fileData = [
+        {id: 1, name: "校园风景.jpg", type: "图片", size: "2.5 MB", time: "2023-04-15 10:30", uploader: "管理员", status: "已上传"},
+        {id: 2, name: "教学大纲.pdf", type: "文档", size: "1.2 MB", time: "2023-04-14 14:20", uploader: "张教授", status: "已审核"},
+        {id: 3, name: "开学典礼.mp4", type: "视频", size: "150 MB", time: "2023-04-13 09:15", uploader: "李老师", status: "上传中"}
+    ];
+
+    // 渲染文件列表
+    function renderFileList(files = fileData) {
+        const tbody = document.getElementById('fileTableBody');
+        tbody.innerHTML = '';
+        files.forEach(file => {
+            const row = `
+                <tr>
+                    <td>${file.name}</td>
+                    <td>${file.type}</td>
+                    <td>${file.size}</td>
+                    <td>${file.time}</td>
+                    <td>${file.uploader}</td>
+                    <td><span class="status ${file.status === '已上传' ? 'active' : file.status === '已审核' ? 'approved' : 'pending'}">${file.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-view" onclick="viewFile(${file.id})">查看</button>
+                        <button class="btn btn-sm btn-edit" onclick="editFile(${file.id})">编辑</button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteFile(${file.id})">删除</button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // 搜索文件
+    function searchFiles() {
+        const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+        const filtered = fileData.filter(file => 
+            file.name.toLowerCase().includes(searchTerm) || 
+            file.uploader.toLowerCase().includes(searchTerm)
+        );
+        renderFileList(filtered);
+    }
+
+    // 筛选文件
+    function filterFiles() {
+        const typeFilter = document.querySelector('.filter-select').value;
+        if (!typeFilter) {
+            renderFileList();
+            return;
+        }
+        const filtered = fileData.filter(file => file.type === typeFilter);
+        renderFileList(filtered);
+    }
+
+    // 打开上传模态框
+    function openUploadModal() {
+        document.getElementById('uploadModal').classList.add('active');
+    }
+
+    // 关闭上传模态框
+    function closeUploadModal() {
+        document.getElementById('uploadModal').classList.remove('active');
+        document.getElementById('uploadForm').reset();
+    }
+
+    // 提交上传表单
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('fileInput');
+        const fileType = document.getElementById('fileType').value;
+        const fileDescription = document.getElementById('fileDescription').value;
+        const fileAccess = document.getElementById('fileAccess').value;
+        
+        if (fileInput.files.length === 0) {
+            showMessage('请选择要上传的文件！', 'error');
+            return;
+        }
+        
+        const file = fileInput.files[0];
+        const newFile = {
+            id: fileData.length + 1,
+            name: file.name,
+            type: fileType,
+            size: formatFileSize(file.size),
+            time: new Date().toLocaleString('zh-CN'),
+            uploader: "管理员",
+            status: "已上传"
+        };
+        
+        fileData.push(newFile);
+        renderFileList();
+        closeUploadModal();
+        showMessage('文件上传成功！', 'success');
+    });
+
+    // 格式化文件大小
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // 查看文件详情
+    function viewFile(id) {
+        const file = fileData.find(f => f.id === id);
+        if (file) {
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>文件详情</h3>
+                        <button class="close-btn" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="detail-view">
+                            <div class="file-preview">
+                                <div class="file-preview-icon">
+                                    ${getFileIcon(file.type)}
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">${file.name}</div>
+                                    <div class="file-details">
+                                        类型：${file.type} | 大小：${file.size} | 上传时间：${file.time}
+                                    </div>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="btn btn-primary">下载</button>
+                                    <button class="btn btn-secondary">分享</button>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <h4>文件信息</h4>
+                                <div class="detail-items">
+                                    <div class="detail-item">
+                                        <span class="detail-label">文件名：</span>
+                                        <span class="detail-value">${file.name}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">文件类型：</span>
+                                        <span class="detail-value">${file.type}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">文件大小：</span>
+                                        <span class="detail-value">${file.size}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">上传时间：</span>
+                                        <span class="detail-value">${file.time}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">上传者：</span>
+                                        <span class="detail-value">${file.uploader}</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">状态：</span>
+                                        <span class="detail-value"><span class="status ${file.status === '已上传' ? 'active' : file.status === '已审核' ? 'approved' : 'pending'}">${file.status}</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+    }
+
+    // 获取文件图标
+    function getFileIcon(type) {
+        const icons = {
+            '图片': '🖼️',
+            '文档': '📄',
+            '视频': '🎬',
+            '其他': '📎'
+        };
+        return icons[type] || '📎';
+    }
+
+    // 编辑文件
+    function editFile(id) {
+        const file = fileData.find(f => f.id === id);
+        if (file) {
+            document.getElementById('fileType').value = file.type;
+            document.getElementById('fileDescription').value = "文件描述...";
+            document.getElementById('fileAccess').value = "公开";
+            openUploadModal();
+        }
+    }
+
+    // 删除文件
+    function deleteFile(id) {
+        if (confirm('确定要删除该文件吗？')) {
+            fileData = fileData.filter(f => f.id !== id);
+            renderFileList();
+            showMessage('文件删除成功！', 'success');
+        }
+    }
+
+    // 显示消息提示
+    function showMessage(text, type) {
+        const message = document.createElement('div');
+        message.className = `message message-${type}`;
+        message.innerHTML = `
+            <div class="message-icon">${type === 'success' ? '✓' : '!'}</div>
+            <div class="message-text">${text}</div>
+            <button class="message-close" onclick="this.parentElement.remove()">×</button>
+        `;
+        document.body.appendChild(message);
+        setTimeout(() => message.remove(), 3000);
+    }
+
+    // 切换侧边栏（移动端）
+    function toggleSidebar() {
+        document.querySelector('.admin-sidebar').classList.toggle('active');
+    }
+
+    // 页面加载时渲染文件列表
+    document.addEventListener('DOMContentLoaded', renderFileList);
+</script>

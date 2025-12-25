@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 华夏大学</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 侧边栏 -->
+       <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>后台管理</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+					<li><a href="dashboard.html" nclick="showSection('dashboard')">
+                        <span class="icon">📊</span> 仪表盘
+                    </a></li>
+                    <li><a href="users.html"  onClick="showsection('users')">
+                        <span class="icon">👥</span> 用户管理
+                    </a></li>
+                    <li><a href= "news.html" onclick="showSection('news')">
+                        <span class="icon">📰</span> 新闻管理
+                    </a></li>
+                    <li><a href="students.html" onclick="showSection('students')">
+                        <span class="icon">🎓</span> 学生管理
+                    </a></li>
+                    <li><a href="teachers.html" onclick="showSection('teachers')">
+                        <span class="icon">👨‍🏫</span> 教师管理
+                    </a></li>
+                    <li><a href="courses.html" onclick="showSection('courses')">
+                        <span class="icon">📚</span> 课程管理
+                    </a></li>
+                    <li><a href="uploads.html" onclick="showSection('uploads')">
+                        <span class="icon">📤</span> 上传管理
+                    </a></li>
+                    <li><a href="settings.html" onclick="showSection('settings')">
+                        <span class="icon">⚙️</span> 系统设置
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">退出登录</a>
+            </div>
+        </aside>
+
+           <!-- 主内容区 -->
+    <main class="admin-main">
+        <!-- 头部 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>系统设置</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span>管理员</span>
+                    <img src="https://picsum.photos/40/40?person" alt="用户头像">
+                </div>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <section class="admin-section active" id="settings">
+            <div class="section-header">
+                <h2>系统配置</h2>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="saveSettings()">保存设置</button>
+                    <button class="btn btn-secondary" onclick="resetSettings()">重置</button>
+                </div>
+            </div>
+
+            <!-- 设置表单 -->
+            <div class="settings-form">
+                <h3>基本设置</h3>
+                <div class="form-group">
+                    <label>系统名称</label>
+                    <input type="text" id="systemName" value="华夏大学后台管理系统">
+                </div>
+                <div class="form-group">
+                    <label>系统版本</label>
+                    <input type="text" id="systemVersion" value="v2.0.1" readonly>
+                </div>
+                <div class="form-group">
+                    <label>系统语言</label>
+                    <select id="systemLanguage">
+                        <option value="zh-CN" selected>简体中文</option>
+                        <option value="en-US">English</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>时区设置</label>
+                    <select id="systemTimezone">
+                        <option value="Asia/Shanghai" selected>中国标准时间 (UTC+8)</option>
+                        <option value="America/New_York">美国东部时间 (UTC-5)</option>
+                        <option value="Europe/London">伦敦时间 (UTC+0)</option>
+                    </select>
+                </div>
+
+                <h3>安全设置</h3>
+                <div class="form-group">
+                    <label>登录超时时间（分钟）</label>
+                    <input type="number" id="loginTimeout" value="30" min="5" max="120">
+                </div>
+                <div class="form-group">
+                    <label>密码强度要求</label>
+                    <select id="passwordStrength">
+                        <option value="low">低强度（6位以上）</option>
+                        <option value="medium" selected>中强度（8位以上，包含字母数字）</option>
+                        <option value="high">高强度（10位以上，包含大小写字母、数字、特殊字符）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>最大登录失败次数</label>
+                    <input type="number" id="maxLoginAttempts" value="5" min="1" max="10">
+                </div>
+                <div class="form-group">
+                    <label>启用双因素认证</label>
+                    <input type="checkbox" id="enable2FA">
+                </div>
+
+                <h3>邮件设置</h3>
+                <div class="form-group">
+                    <label>SMTP服务器</label>
+                    <input type="text" id="smtpServer" value="smtp.huaxia.edu.cn">
+                </div>
+                <div class="form-group">
+                    <label>SMTP端口</label>
+                    <input type="number" id="smtpPort" value="587">
+                </div>
+                <div class="form-group">
+                    <label>发件人邮箱</label>
+                    <input type="email" id="senderEmail" value="admin@huaxia.edu.cn">
+                </div>
+                <div class="form-group">
+                    <label>启用SSL/TLS</label>
+                    <input type="checkbox" id="enableSSL" checked>
+                </div>
+
+                <h3>文件上传设置</h3>
+                <div class="form-group">
+                    <label>最大文件大小（MB）</label>
+                    <input type="number" id="maxFileSize" value="50" min="1" max="500">
+                </div>
+                <div class="form-group">
+                    <label>允许的文件类型</label>
+                    <input type="text" id="allowedFileTypes" value=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                </div>
+                <div class="form-group">
+                    <label>文件存储路径</label>
+                    <input type="text" id="fileStoragePath" value="/uploads/">
+                </div>
+
+                <h3>系统健康状态</h3>
+                <div class="system-health">
+                    <div class="health-item">
+                        <div class="health-status healthy"></div>
+                        <div class="health-info">
+                            <h5>数据库连接</h5>
+                            <p>连接正常，响应时间：15ms</p>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-status healthy"></div>
+                        <div class="health-info">
+                            <h5>服务器状态</h5>
+                            <p>CPU使用率：32%，内存使用率：45%</p>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-status healthy"></div>
+                        <div class="health-info">
+                            <h5>网络连接</h5>
+                            <p>网络延迟：28ms，带宽使用：120Mbps</p>
+                        </div>
+                    </div>
+                    <div class="health-item">
+                        <div class="health-status healthy"></div>
+                        <div class="health-info">
+                            <h5>存储空间</h5>
+                            <p>已使用：245GB，剩余：755GB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>操作日志</h3>
+                <div class="operation-history">
+                    <div class="operation-item">
+                        <div class="operation-time">2023-04-15 10:30:25</div>
+                        <div class="operation-action approved">登录</div>
+                        <div class="operation-details">管理员登录系统</div>
+                    </div>
+                    <div class="operation-item">
+                        <div class="operation-time">2023-04-15 09:15:42</div>
+                        <div class="operation-action pending">修改</div>
+                        <div class="operation-details">修改了系统配置</div>
+                    </div>
+                    <div class="operation-item">
+                        <div class="operation-time">2023-04-14 16:20:18</div>
+                        <div class="operation-action approved">添加</div>
+                        <div class="operation-details">添加了新用户</div>
+                    </div>
+                    <div class="operation-item">
+                        <div class="operation-time">2023-04-14 14:05:33</div>
+                        <div class="operation-action rejected">删除</div>
+                        <div class="operation-details">删除了无效数据</div>
+                    </div>
+                </div>
+
+                <h3>系统信息</h3>
+                <div class="detail-items">
+                    <div class="detail-item">
+                        <span class="detail-label">服务器操作系统：</span>
+                        <span class="detail-value">Linux Ubuntu 20.04</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Web服务器：</span>
+                        <span class="detail-value">Nginx 1.18.0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">数据库：</span>
+                        <span class="detail-value">MySQL 8.0.28</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">PHP版本：</span>
+                        <span class="detail-value">PHP 8.1.5</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">系统启动时间：</span>
+                        <span class="detail-value">2023-04-01 08:00:00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">运行时长：</span>
+                        <span class="detail-value">14天 2小时 30分钟</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="resetSettings()">重置</button>
+                    <button class="btn btn-primary" onclick="saveSettings()">保存设置</button>
+                    <button class="btn btn-danger" onclick="clearLogs()">清空日志</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    // 系统设置数据
+    let systemSettings = JSON.parse(localStorage.getItem('systemSettings')) || {
+        systemName: "华夏大学后台管理系统",
+        systemVersion: "v2.0.1",
+        systemLanguage: "zh-CN",
+        systemTimezone: "Asia/Shanghai",
+        loginTimeout: 30,
+        passwordStrength: "medium",
+        maxLoginAttempts: 5,
+        enable2FA: false,
+        smtpServer: "smtp.huaxia.edu.cn",
+        smtpPort: 587,
+        senderEmail: "admin@huaxia.edu.cn",
+        enableSSL: true,
+        maxFileSize: 50,
+        allowedFileTypes: ".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx",
+        fileStoragePath: "/uploads/"
+    };
+
+    // 操作日志数据
+    let operationLogs = JSON.parse(localStorage.getItem('operationLogs')) || [
+        {time: "2023-04-15 10:30:25", action: "登录", details: "管理员登录系统", status: "approved"},
+        {time: "2023-04-15 09:15:42", action: "修改", details: "修改了系统配置", status: "pending"},
+        {time: "2023-04-14 16:20:18", action: "添加", details: "添加了新用户", status: "approved"},
+        {time: "2023-04-14 14:05:33", action: "删除", details: "删除了无效数据", status: "rejected"}
+    ];
+
+    // 初始化设置表单
+    function initSettingsForm() {
+        document.getElementById('systemName').value = systemSettings.systemName;
+        document.getElementById('systemVersion').value = systemSettings.systemVersion;
+        document.getElementById('systemLanguage').value = systemSettings.systemLanguage;
+        document.getElementById('systemTimezone').value = systemSettings.systemTimezone;
+        document.getElementById('loginTimeout').value = systemSettings.loginTimeout;
+        document.getElementById('passwordStrength').value = systemSettings.passwordStrength;
+        document.getElementById('maxLoginAttempts').value = systemSettings.maxLoginAttempts;
+        document.getElementById('enable2FA').checked = systemSettings.enable2FA;
+        document.getElementById('smtpServer').value = systemSettings.smtpServer;
+        document.getElementById('smtpPort').value = systemSettings.smtpPort;
+        document.getElementById('senderEmail').value = systemSettings.senderEmail;
+        document.getElementById('enableSSL').checked = systemSettings.enableSSL;
+        document.getElementById('maxFileSize').value = systemSettings.maxFileSize;
+        document.getElementById('allowedFileTypes').value = systemSettings.allowedFileTypes;
+        document.getElementById('fileStoragePath').value = systemSettings.fileStoragePath;
+    }
+
+    // 保存设置
+    function saveSettings() {
+        // 收集表单数据
+        systemSettings.systemName = document.getElementById('systemName').value;
+        systemSettings.systemLanguage = document.getElementById('systemLanguage').value;
+        systemSettings.systemTimezone = document.getElementById('systemTimezone').value;
+        systemSettings.loginTimeout = parseInt(document.getElementById('loginTimeout').value);
+        systemSettings.passwordStrength = document.getElementById('passwordStrength').value;
+        systemSettings.maxLoginAttempts = parseInt(document.getElementById('maxLoginAttempts').value);
+        systemSettings.enable2FA = document.getElementById('enable2FA').checked;
+        systemSettings.smtpServer = document.getElementById('smtpServer').value;
+        systemSettings.smtpPort = parseInt(document.getElementById('smtpPort').value);
+        systemSettings.senderEmail = document.getElementById('senderEmail').value;
+        systemSettings.enableSSL = document.getElementById('enableSSL').checked;
+        systemSettings.maxFileSize = parseInt(document.getElementById('maxFileSize').value);
+        systemSettings.allowedFileTypes = document.getElementById('allowedFileTypes').value;
+        systemSettings.fileStoragePath = document.getElementById('fileStoragePath').value;
+
+        // 保存到localStorage
+        localStorage.setItem('systemSettings', JSON.stringify(systemSettings));
+
+        // 添加操作日志
+        const newLog = {
+            time: new Date().toLocaleString('zh-CN'),
+            action: "修改",
+            details: "修改了系统配置",
+            status: "approved"
+        };
+        operationLogs.unshift(newLog);
+        localStorage.setItem('operationLogs', JSON.stringify(operationLogs));
+
+        // 更新操作日志显示
+        updateOperationLogs();
+
+        // 显示成功消息
+        showMessage('系统设置保存成功！', 'success');
+    }
+
+    // 重置设置
+    function resetSettings() {
+        if (confirm('确定要重置所有设置吗？这将恢复为默认值。')) {
+            const defaultSettings = {
+                systemName: "华夏大学后台管理系统",
+                systemVersion: "v2.0.1",
+                systemLanguage: "zh-CN",
+                systemTimezone: "Asia/Shanghai",
+                loginTimeout: 30,
+                passwordStrength: "medium",
+                maxLoginAttempts: 5,
+                enable2FA: false,
+                smtpServer: "smtp.huaxia.edu.cn",
+                smtpPort: 587,
+                senderEmail: "admin@huaxia.edu.cn",
+                enableSSL: true,
+                maxFileSize: 50,
+                allowedFileTypes: ".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx",
+                fileStoragePath: "/uploads/"
+            };
+
+            systemSettings = defaultSettings;
+            localStorage.setItem('systemSettings', JSON.stringify(systemSettings));
+            initSettingsForm();
+            showMessage('设置已重置为默认值！', 'success');
+        }
+    }
+
+    // 清空日志
+    function clearLogs() {
+        if (confirm('确定要清空所有操作日志吗？此操作不可恢复。')) {
+            operationLogs = [];
+            localStorage.setItem('operationLogs', JSON.stringify(operationLogs));
+            updateOperationLogs();
+            showMessage('操作日志已清空！', 'success');
+        }
+    }
+
+    // 更新操作日志显示
+    function updateOperationLogs() {
+        const operationHistory = document.querySelector('.operation-history');
+        operationHistory.innerHTML = '';
+        
+        operationLogs.forEach(log => {
+            const operationItem = document.createElement('div');
+            operationItem.className = 'operation-item';
+            operationItem.innerHTML = `
+                <div class="operation-time">${log.time}</div>
+                <div class="operation-action ${log.status}">${log.action}</div>
+                <div class="operation-details">${log.details}</div>
+            `;
+            operationHistory.appendChild(operationItem);
+        });
+    }
+
+    // 显示消息提示
+    function showMessage(text, type) {
+        const message = document.createElement('div');
+        message.className = `message message-${type}`;
+        message.innerHTML = `
+            <div class="message-icon">${type === 'success' ? '✓' : '!'}</div>
+            <div class="message-text">${text}</div>
+            <button class="message-close" onclick="this.parentElement.remove()">×</button>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试页面</title>
+</head>
+<body>
+    <h1>JavaScript 测试</h1>
+    <button onclick="testFunction()">测试按钮</button>
+    
+    <script>
+        function testFunction() {
+            alert('JavaScript 正常工作！');
+        }
+        
+        // 测试 showSection 函数是否存在
+        if (typeof showSection === 'function') {
+            console.log('showSection 函数存在');
+        } else {
+            console.log('showSection 函数不存在');
+        }
+    </script>
+    
+    <!-- 加载 admin.js -->
+    <script src="js/admin.js"></script>
+</body>
+</html>

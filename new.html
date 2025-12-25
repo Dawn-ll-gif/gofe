@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园新闻 - 龙城大学</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <img src="images/微信图片_20251222153205_15_958.png" alt="学校logo" class="logo-img">
+                <span class="logo-text">龙城大学</span>
+            </a>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="index.html" class="navbar-link"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="navbar-item"><a href="about.html" class="navbar-link"><i class="fas fa-university"></i> 学校简介</a></li>
+                <li class="navbar-item"><a href="news.html" class="navbar-link active"><i class="fas fa-newspaper"></i> 校园新闻</a></li>
+                <li class="navbar-item"><a href="admissions.html" class="navbar-link"><i class="fas fa-graduation-cap"></i> 招生就业</a></li>
+                <li class="navbar-item"><a href="campus.html" class="navbar-link"><i class="fas fa-tree"></i> 校园环境</a></li>
+                <li class="navbar-item"><a href="mailto:info@campus.edu" class="navbar-link"><i class="fas fa-envelope"></i> 校园邮箱</a></li>
+                <li class="navbar-item"><a href="login.html" class="navbar-link"><i class="fas fa-sign-in-alt"></i> 登录</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <h3 class="sidebar-title">快速导航</h3>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="#important-news" class="sidebar-link"><i class="fas fa-exclamation-circle"></i> 重要新闻</a></li>
+            <li class="sidebar-item"><a href="#campus-dynamic" class="sidebar-link"><i class="fas fa-bullhorn"></i> 校园动态</a></li>
+            <li class="sidebar-item"><a href="index.html#school-intro" class="sidebar-link"><i class="fas fa-info-circle"></i> 学校简介</a></li>
+            <li class="sidebar-item"><a href="index.html#admissions-info" class="sidebar-link"><i class="fas fa-file-alt"></i> 招生就业</a></li>
+            <li class="sidebar-item"><a href="index.html#campus-env" class="sidebar-link"><i class="fas fa-image"></i> 校园环境</a></li>
+            <li class="sidebar-item"><a href="index.html#contact-us" class="sidebar-link"><i class="fas fa-phone"></i> 联系我们</a></li>
+        </ul>
+
+        <h3 class="sidebar-title">校园邮箱</h3>
+        <div class="email-section">
+            <p>学生邮箱: <a href="mailto:student@campus.edu">student@campus.edu</a></p>
+            <p>教师邮箱: <a href="mailto:teacher@campus.edu">teacher@campus.edu</a></p>
+            <p>行政邮箱: <a href="mailto:admin@campus.edu">admin@campus.edu</a></p>
+        </div>
+    </aside>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> 校园新闻</h2>
+            
+            <!-- 搜索栏 -->
+            <div class="search-bar">
+                <input type="text" id="newsSearch" placeholder="搜索新闻标题或内容..." class="search-input">
+                <button type="button" class="search-btn"><i class="fas fa-search"></i> 搜索</button>
+            </div>
+
+            <!-- 新闻分类选项卡 -->
+            <div class="news-tabs">
+                <button class="tab-btn active" data-tab="all">全部新闻</button>
+                <button class="tab-btn" data-tab="important">重要新闻</button>
+                <button class="tab-btn" data-tab="dynamic">校园动态</button>
+            </div>
+
+            <!-- 新闻列表 -->
+            <div class="news-list">
+                <!-- 重要新闻 -->
+                <div class="news-card searchable" data-category="important">
+                    <h3 class="news-title">教育部领导莅临我校视察指导工作</h3>
+                    <p class="news-content">近日，教育部领导一行莅临我校，对我校的教学工作、科研成果和校园建设进行了全面视察和指导。领导们对我校近年来的发展给予了高度评价，并提出了宝贵的意见和建议。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 校长办公室</span>
+                        <span><i class="fas fa-calendar"></i> 2024-05-15</span>
+                        <span><i class="fas fa-eye"></i> 1234</span>
+                    </div>
+                    <a href="news-detail.html?id=1" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="news-card searchable" data-category="important">
+                    <h3 class="news-title">我校荣获"全国文明校园"称号</h3>
+                    <p class="news-content">在全国精神文明建设工作表彰大会上，我校被授予"全国文明校园"荣誉称号，这是对我校精神文明建设工作的高度肯定。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 宣传部</span>
+                        <span><i class="fas fa-calendar"></i> 2024-05-10</span>
+                        <span><i class="fas fa-eye"></i> 892</span>
+                    </div>
+                    <a href="news-detail.html?id=2" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- 校园动态 -->
+                <div class="news-card searchable" data-category="dynamic">
+                    <h3 class="news-title">学校举办2024年春季运动会</h3>
+                    <p class="news-content">我校于4月15日至16日举办了2024年春季运动会，来自各学院的运动员们展现了出色的竞技水平和团队精神。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 教务处</span>
+                        <span><i class="fas fa-calendar"></i> 2024-04-17</span>
+                        <span><i class="fas fa-eye"></i> 654</span>
+                    </div>
+                    <a href="news-detail.html?id=3" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="news-card searchable" data-category="dynamic">
+                    <h3 class="news-title">2024年校园acee文化节圆满落幕</h3>
+                    <p class="news-content">为期两周的2024年校园acee文化节圆满落幕，各类文艺活动丰富了同学们的课余生活，展现了我校学子的才华和创造力。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 团委</span>
+                        <span><i class="fas fa-calendar"></i> 2024-04-25</span>
+                        <span><i class="fas fa-eye"></i> 432</span>
+                    </div>
+                    <a href="news-detail.html?id=4" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="news-card searchable" data-category="dynamic">
+                    <h3 class="news-title">我校与企业签署战略合作协议</h3>
+                    <p class="news-content">我校与多家知名企业签署了战略合作协议，将在人才培养、科研合作、实习就业等方面开展深入合作。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 科研处</span>
+                        <span><i class="fas fa-calendar"></i> 2024-05-05</span>
+                        <span><i class="fas fa-eye"></i> 567</span>
+                    </div>
+                    <a href="news-detail.html?id=5" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="news-card searchable" data-category="dynamic">
+                    <h3 class="news-title">学术讲座：人工智能与未来教育</h3>
+                    <p class="news-content">我校邀请了著名人工智能专家张教授来校作学术讲座，分享人工智能技术在教育领域的应用和未来发展趋势。</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> 科技处</span>
+                        <span><i class="fas fa-calendar"></i> 2024-05-08</span>
+                        <span><i class="fas fa-eye"></i> 789</span>
+                    </div>
+                    <a href="news-detail.html?id=6" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination">
+                <button class="page-btn" disabled><i class="fas fa-chevron-left"></i> 上一页</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn"><i class="fas fa-chevron-right"></i> 下一页</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 大学校园网站. 保留所有权利.</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link"><i class="fab fa-weibo"></i> 微博</a>
+                    <a href="#" class="footer-link"><i class="fab fa-weixin"></i> 微信</a>
+                    <a href="#" class="footer-link"><i class="fab fa-qq"></i> QQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/news.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
